@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -x
 shopt -s expand_aliases
 
 ##Director Information
@@ -10,7 +10,7 @@ directorUserID=
 directorPassword=
 
 ##Jobs / Components to Start / Stop
-ert=true
+ert=false
 mysql=false
 metrics=false
 rabbit=false
@@ -19,9 +19,9 @@ redis=false
 #Validate Args
 if [ $1 == "start" -o $1 == "stop" ];
         then
-                echo "Running PCF $1 Process..."
+                echo "Running PCF $1 process..."
         else
-                echo "Only start or stop are valid args!"
+                echo "Only start or stop are valid arguements!"
                 exit 1
 fi
 
@@ -29,16 +29,18 @@ fi
 alias bosh='BUNDLE_GEMFILE=/home/tempest-web/tempest/web/vendor/bosh/Gemfile bundle exec bosh'
 
 #Target the director
+echo "Targeting bosh..."
 bosh -n --ca-cert $pathToCaCerts target $directorIP
 
 #Login to director
+echo "Logging into BOSH..."
 printf "director\n$directorPassword\n" | bosh login
 
 #Start up or Shutdown Components
-
 if [ $1 == "stop" ];
 then
-       if ($metrics);
+        echo "Stopping PCF..."
+        if ($metrics);
         then
                 bosh deployment /var/tempest/workspaces/default/deployments/apm*.yml
                 printf "yes" | bosh stop --hard
@@ -65,6 +67,7 @@ then
         fi
 elif [ $1 == "start" ];
 then
+        echo "Starting PCF..."
         if ($mysql);
         then
                 bosh deployment /var/tempest/workspaces/default/deployments/p-mysql-*.yml
@@ -91,4 +94,3 @@ then
                 printf "yes" | bosh start
         fi
 fi
-

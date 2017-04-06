@@ -20,8 +20,8 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m h  dom mon dow   command
-
-#Startup PCF M-F at 7:15AM EST
-15 11 * * 1-5 /home/ubuntu/scripts/pcfStartStop.sh start
+PATH=$PATH:/usr/bin:/bin:/usr/local/bin
+#Startup PCF M-F at 8AM EST
+15 11 * * 1-5 /home/ubuntu/scripts/pcfStartStop.sh start > /home/ubuntu/scripts/pcfStartStop.log 2>&1
 #Shutdown PCF M-$ at 6PM EST
-0 22 * * 1-5 /home/ubuntu/scripts/pcfStartStop.sh stop
+00 122 * * 1-5 /home/ubuntu/scripts/pcfStartStop.sh start > /home/ubuntu/scripts/pcfStartStop.log 2>&1
