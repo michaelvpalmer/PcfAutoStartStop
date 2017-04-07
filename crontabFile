@@ -23,5 +23,5 @@
 PATH=$PATH:/usr/bin:/bin:/usr/local/bin
 #Startup PCF M-F at 8AM EST
 15 11 * * 1-5 /home/ubuntu/scripts/pcfStartStop.sh start > /home/ubuntu/scripts/pcfStartStop.log 2>&1
-#Shutdown PCF M-$ at 6PM EST
-00 22 * * 1-5 /home/ubuntu/scripts/pcfStartStop.sh start > /home/ubuntu/scripts/pcfStartStop.log 2>&1
+#Shutdown PCF M-F at 6PM EST
+00 22 * * 1-5 /home/ubuntu/scripts/pcfStartStop.sh stop > /home/ubuntu/scripts/pcfStartStop.log 2>&1
